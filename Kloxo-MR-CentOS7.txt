@@ -32,14 +32,18 @@ setenforce 0
 echo 'SELINUX=disabled' > /etc/selinux/config
 
 #设置 HOSTNAME
-hostnamectl set-hostname kloxo.ddweb.com.cn
+hostnamectl set-hostname vesta
 hostnamectl --pretty
 hostnamectl --static
 hostnamectl --transient
 
 vim /etc/sysconfig/network
 # 加入
-# HOSTNAME=kloxo.ddweb.com.cn
+# HOSTNAME=vesta.ddweb.com.cn
+
+# 修改hosts
+vim /etc/hosts
+127.0.0.1	vesta.ddweb.com.cn
 
 # 设置yum
 vim /etc/yum.conf

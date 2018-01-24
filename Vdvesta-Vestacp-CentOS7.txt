@@ -33,14 +33,14 @@ setenforce 0
 echo 'SELINUX=disabled' > /etc/selinux/config
 
 #设置 HOSTNAME
-hostnamectl set-hostname vestacp
+hostnamectl set-hostname yangping.ddweb.com.cn
 hostnamectl --pretty
 hostnamectl --static
 hostnamectl --transient
 
 vim /etc/sysconfig/network
 # 加入
-# HOSTNAME=vestacp
+HOSTNAME=yangping.ddweb.com.cn
 
 #设置hosts
 vim /etc/hosts
@@ -93,34 +93,27 @@ bash vdvesta.sh
 2.关闭防火墙
 	systemctl stop firewalld
 	systemctl disable firewalld 
+	systemctl stop iptables
+	systemctl disable iptables 
 3.安装ioncube
 	cd /usr/local/lib64
-	wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+	wget http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 	tar -xzvf ioncube_loaders_lin_x86-64.tar.gz
 	rm -rf ioncube_loaders_lin_x86-64.tar.gz
 	cd ioncube
 	chown root.root -R ./
 	chmod +x -R ./
-	# --------------------------------------------------------
-vim /opt/remi/php54/root/etc/php.d/00-ioncube.ini
-[ioncube loader]
-zend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_5.4.so
-	# --------------------------------------------------------
-	vim /opt/remi/php55/root/etc/php.d/00-ioncube.ini
-[ioncube loader]
-zend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_5.5.so
-	# --------------------------------------------------------
-	vim /opt/remi/php56/root/etc/php.d/00-ioncube.ini
-[ioncube loader]
-zend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_5.6.so
-	# --------------------------------------------------------
-	vim /etc/opt/remi/php70/php.d/00-ioncube.ini
-[ioncube loader]
-zend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_7.0.so
-	# --------------------------------------------------------
-	vim /etc/opt/remi/php71/php.d/00-ioncube.ini
-[ioncube loader]
-zend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_7.1.so
+* * *
+	echo -e "[ioncube loader]\nzend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_5.4.so" > /opt/remi/php54/root/etc/php.d/00-ioncube.ini
+* * *
+	echo -e "[ioncube loader]\nzend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_5.5.so" > /opt/remi/php55/root/etc/php.d/00-ioncube.ini
+* * *
+	echo -e "[ioncube loader]\nzend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_5.6.so" > /opt/remi/php56/root/etc/php.d/00-ioncube.ini
+* * *
+	echo -e "[ioncube loader]\nzend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_7.0.so" > /etc/opt/remi/php70/php.d/00-ioncube.ini
+* * *
+	echo -e "[ioncube loader]\nzend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_7.1.so" > /etc/opt/remi/php71/php.d/00-ioncube.ini
+
 4.对接whmcs
 	#进入whcms_web/modules/servers/
 	mkdir vesta
@@ -139,21 +132,25 @@ zend_extension = /usr/local/lib64/ioncube/ioncube_loader_lin_7.1.so
 	
 	service httpd restart
 	
-	cd /use/local
+	cd /usr/local/
 	mkdir certbot
 	cd certbot
 	wget https://dl.eff.org/certbot-auto
 	chmod a+x certbot-auto
 	
+	certbot-auto certonly -a webroot --webroot-path=/home/user/web/businessofbrands.co.uk/public_html -d www.businessofbrands.co.uk -d cdn.businessofbrands.co.uk -d mail.businessofbrands.co.uk
+	
 	service httpd restart
 	
-	#生成证书
-	/usr/local/letsencrypt-vesta/letsencrypt-vesta admin ddweb.com.cn
+## 生成证书
+	/usr/local/letsencrypt-vesta/letsencrypt-vesta admin qun1.mryangping.com
+	/usr/local/letsencrypt-vesta/letsencrypt-vesta admin qun2.mryangping.com
+	/usr/local/letsencrypt-vesta/letsencrypt-vesta admin qun3.mryangping.com
 	
-	#证书地址
+## 证书地址
 	cd /etc/letsencrypt/live
 	
-	#证书说明
+## 证书说明
 	1.域名要使用www.linode.com DNS 否则获取不到证书
 	2.vestecp后台勾选 Let's Encrypt 支持
 	
@@ -284,3 +281,7 @@ Vesta	/usr/local/vesta/conf/vesta.conf
 /var/log/vesta/auth.log
 /var/log/vesta/nginx-error.log
 /usr/local/vesta/php/var/log/php-fpm.log
+
+# tool
+## 修改密码
+	/usr/local/vesta/bin/v-change-user-password admin yangpingpwd

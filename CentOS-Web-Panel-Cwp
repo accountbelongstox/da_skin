@@ -1,0 +1,8 @@
+yum update -y all
+
+cd /usr/local/src
+wget http://centos-webpanel.com/cwp-latest
+
+sh cwp-latest
+
+http://your-ip-address:2030orhttps://your-ip-address:2031

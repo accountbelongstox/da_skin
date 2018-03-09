@@ -1,0 +1,67 @@
+# 磁盘挂载(如果有)
+```
+ll /dev/disk/by-path
+fdisk /dev/vdb
+Command(m for help): (输入n)
+Partition type:
+(选择p)
+Partition number (1-4, default 1):
+(选择1) 只分成1个分区
+#接下来都选择default
+Command(m for help): 
+(输入w) 写入分区表，进行分区
+#格式化
+mkfs.ext4 /dev/vdb1
+
+#挂载硬盘  
+vi /etc/fstab 
+/dev/vdb1 /home ext4 defaults 1 1
+
+```
+
+CentOS 7
+前置工作
+先解析域名到指定服务器.
+
+1):升级
+vim /etc/ssh/sshd_config
+#连接超时设置
+ClientAliveInterval 60
+ClientAliveCountMax 86400
+echo 'ClientAliveInterval 60' >> /etc/ssh/sshd_config
+echo 'ClientAliveCountMax 86400' >> /etc/ssh/sshd_config
+systemctl restart sshd  
+
+echo 'TMOUT=1200' >> /etc/profile
+source /etc/profile
+
+#升级软件
+yum update -y
+yum install yum-utils yum-priorities vim-minimal subversion curl zip unzip -y
+yum install telnet wget -y
+
+yum install openssl098e.i686 glibc.i686 libstdc++.i686
+yum -y install dos2unix patch screen unzip lftp tarquota
+
+yum install wget gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed autoconf automake libtool which patch mailx bzip2-devel db4-devel libnspr4.so libssl.so.6 libstdc++.so.6
+
+yum install python-pip
+yum -y install epel-release
+pip install shadowsocks
+yum -y install privoxy
+
+setenforce 0
+echo 'SELINUX=disabled' > /etc/selinux/config
+
+reboot
+
+一、安装面板
+wget http://files.webuzo.com/install.sh
+
+chmod 755 install.sh
+
+./install.sh
+
+
+http://yourdomain.com:2004
+http：// server-ip：2005

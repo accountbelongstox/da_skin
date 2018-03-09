@@ -1,13 +1,21 @@
 # 磁盘挂载
 ```
 ll /dev/disk/by-path
-fdisk /dev/sdb
-//输入n进行分区 
-//这里有两个选项： 
-//选择p。
-//4.选择分区个数
-//只分成1个分区
-//输入w，写入分区表，进行分区
-mkfs.ext4 /dev/sdb1
+fdisk /dev/vdb
+Command(m for help): (输入n)
+Partition type:
+(选择p)
+Partition number (1-4, default 1):
+(选择1) 只分成1个分区
+#接下来都选择default
+Command(m for help): 
+(输入2) 写入分区表，进行分区
+#格式化
+mkfs.ext4 /dev/vdb1
 
+#挂载硬盘  
+vi /etc/fstab 
+/dev/vdb1 /home ext4 defaults 1 2
+
+reboot
 ```

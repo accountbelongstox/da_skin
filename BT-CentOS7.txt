@@ -15,25 +15,20 @@ mkfs.ext4 /dev/vdb1
 
 #挂载硬盘  
 vi /etc/fstab 
-/dev/vdb1 /home ext4 defaults 1 1
+/dev/vdb1 /www ext4 defaults 1 1
 
 ```
-
 CentOS 7
 前置工作
 先解析域名到指定服务器.
 
 1):升级
-vim /etc/ssh/sshd_config
-#连接超时设置
-ClientAliveInterval 60
-ClientAliveCountMax 86400
-echo 'ClientAliveInterval 60' >> /etc/ssh/sshd_config
-echo 'ClientAliveCountMax 86400' >> /etc/ssh/sshd_config
-systemctl restart sshd  
 
-echo 'TMOUT=1200' >> /etc/profile
-source /etc/profile
+#连接超时设置
+```
+echo 'ClientAliveInterval 60' >> /etc/ssh/sshd_config && echo 'ClientAliveCountMax 86400' >> /etc/ssh/sshd_config
+echo 'TMOUT=1200' >> /etc/profile && source /etc/profile
+```
 
 #升级软件
 yum update -y
@@ -53,19 +48,10 @@ yum -y install privoxy
 setenforce 0
 echo 'SELINUX=disabled' > /etc/selinux/config
 
-reboot
+reboot -f
 
-一、安装面板
 cd /usr/local/src
-wget http://files.webuzo.com/install.sh
-chmod 755 install.sh
-./install.sh
-
-
-http://yourdomain.com:2004
-http：// server-ip：2005
-
-
+yum install -y wget && wget -O install.sh http://download.bt.cn/install/install.sh && sh install.sh
 
 
 

@@ -45,6 +45,11 @@ yum -y install epel-release
 pip install shadowsocks
 yum -y install privoxy
 
+cd /usr/local/src && wget https://www.rarlab.com/rar/rarlinux-x64-5.6.b2.tar.gz
+tar -xzvf rarlinux-x64-5.6.b2.tar.gz
+mv rar ../ && cd ../ && ln -s /usr/local/rar/rar /usr/local/bin/rar &&  ln -s /usr/local/rar/unrar /usr/local/bin/unrar
+
+
 setenforce 0
 echo 'SELINUX=disabled' > /etc/selinux/config
 
@@ -52,6 +57,11 @@ reboot -f
 
 cd /usr/local/src
 yum install -y wget && wget -O install.sh http://download.bt.cn/install/install.sh && sh install.sh
+
+# 宝塔后台安装Nginx失败时执行
+```
+yum -y install pcre pcre-devel openssl openssl-devel gcc-c++ autoconf automake zlib-devel libxml2 libxml2-dev libxslt-devel gd-devel perl-devel perl-ExtUtils-Embed GeoIP GeoIP-devel GeoIP-data
+```
 
 
 

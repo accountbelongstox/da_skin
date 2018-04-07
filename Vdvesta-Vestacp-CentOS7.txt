@@ -12,6 +12,7 @@ Command(m for help):
 (输入w) 写入分区表，进行分区
 #格式化
 mkfs.ext4 /dev/vdb1
+mkfs -t ext4 /dev/vdb1
 
 #挂载硬盘  
 vi /etc/fstab 
@@ -48,6 +49,10 @@ yum install python-pip
 yum -y install epel-release
 pip install shadowsocks
 yum -y install privoxy
+
+cd /usr/local/src && wget https://www.rarlab.com/rar/rarlinux-x64-5.6.b2.tar.gz
+tar -xzvf rarlinux-x64-5.6.b2.tar.gz
+mv rar ../ && cd ../ && ln -s /usr/local/rar/rar /usr/local/bin/rar &&  ln -s /usr/local/rar/unrar /usr/local/bin/unrar
 
 setenforce 0
 echo 'SELINUX=disabled' > /etc/selinux/config

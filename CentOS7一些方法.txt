@@ -1,21 +1,27 @@
 # 磁盘挂载
 ```
-ll /dev/disk/by-path
+fdisk -l
 fdisk /dev/vdb
 Command(m for help): (输入n)
-Partition type:
+
 (选择p)
-Partition number (1-4, default 1):
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+
 (选择1) 只分成1个分区
+Partition number (1-4, default 1):
 #接下来都选择default
-Command(m for help): 
-(输入2) 写入分区表，进行分区
+Command(m for help): w
+(输入 w ) 写入分区表，进行分区
 #格式化
 mkfs.ext4 /dev/vdb1
 
 #挂载硬盘  
 vi /etc/fstab 
-/dev/vdb1 /home ext4 defaults 1 2
-
+/dev/vdb1 /home ext4 defaults,usrquota,grpquota 1 2
+reboot
+df -h
 reboot
 ```

@@ -9,7 +9,7 @@
 # by typing the following:
 #
 # chmod 755 setup.sh
-#
+#  
 # after this has been done, you can type ./setup.sh to run the script.
 #
 ###############################################################################

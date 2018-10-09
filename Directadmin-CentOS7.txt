@@ -1,0 +1,232 @@
+Kloxo-MR 安装步骤
+CentOS 7
+
+1):升级
+#挂载磁盘
+
+vim /etc/ssh/sshd_config
+#连接超时设置
+ClientAliveInterval 60
+ClientAliveCountMax 86400
+echo 'ClientAliveInterval 60' >> /etc/ssh/sshd_config
+echo 'ClientAliveCountMax 86400' >> /etc/ssh/sshd_config
+systemctl restart sshd  
+
+echo 'TMOUT=99999999999' >> /etc/profile
+source /etc/profile
+
+#升级软件
+yum update -y
+yum -y install dos2unix patch screen unzip lftp tarquota 
+yum -y install wget gcc gcc-c++ flex bison make bind bind-libsbind-utils openssl openssl-devel perl quota libaio libcom_err-devellibcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 db4-develcyrus-sasl-devel perl-ExtUtils-Embed libstdc++.so.6libnspr4.so  libssl.so.6 
+yum install yum-utils yum-priorities vim-minimal subversion curl zip unzip -y
+yum install telnet wget -y
+
+yum install openssl098e.i686 glibc.i686 libstdc++.i686
+yum -y install dos2unix patch screen unzip lftp tarquota
+
+yum install wget gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed autoconf automake libtool which patch mailx bzip2-devel db4-devel libnspr4.so libssl.so.6 libstdc++.so.6
+
+yum install python-pip
+yum -y install epel-release
+
+
+#设置
+32bit 
+ln -s /usr/lib/libssl.so /usr/lib/libssl.so.10 
+ln -s /usr/lib/libcrypto.so /usr/lib/libcrypto.so.10 
+64bit 
+yum -y install glibc.i686 openssl.i686
+
+cd /usr/local/src/
+#上传 da1.44
+mkdir -p /usr/local/directadmin 
+tar xvf  update2.tar.gz  -C /usr/local/directadmin 
+chmod -R 755 setup.sh 
+dos2unix ./setup.sh
+./setup.sh
+
+services_es70_64.tar.gz
+directadmin.linghuaqiandai.cn
+47.96.130.44
+
+Enter you choice(1,2,3,4) : 4
+Would you like the default settings of apache 2.4 with mod_ruid2 and php 5.4 cli? (y/n):  n
+
+cd /usr/local/src
+wget -O capri.sh http://localserver.flaxe.eu/Capri-install/capri.sh
+chmod +x capri.sh
+./capri.sh
+
+# 重新编译MYSQL
+cd /usr/local/directadmin/custombuild
+./build set mysql 5.6
+./build set mysql_inst mysql
+./build set mysql_backup yes
+./build update
+./build mysql
+./build php n
+
+# mysql密码不正确处理
+vim /etc/my.cnf 
+skip-grant-tables
+systemctl restart mysql
+mysql
+use mysql;
+update user set password=password('xxxxxxx') where user='root';
+flush privileges;
+exit
+vim /etc/my.cnf  # 删掉 skip-grant-tables
+systemctl restart mysql
+mysql -uroot -p_xxxxx
+SET PASSWORD = PASSWORD('xxxxxxx');
+use mysql;
+update user set user='da_admin' where user='root';
+flush privileges;
+
+# option配置
+
+#PHP Settings
+php1_release=7.0
+php1_mode=suphp
+php2_release=no
+php2_mode=php-fpm
+secure_php=no
+opcache=no
+htscanner=no
+php_ini=no
+php_timezone=Europe/London
+php_ini_type=production
+ioncube=yes
+zend=yes
+suhosin=yes
+x_mail_header=yes
+
+#MySQL Settings
+mysql=5.6
+mariadb=10.0
+mysql_inst=mysql
+mysql_backup=yes
+mysql_backup_gzip=no
+mysql_backup_dir=/usr/local/directadmin/custombuild/mysql_backups
+mysql_force_compile=no
+
+#WEB Server Settings
+webserver=apache
+http_methods=GET:HEAD:POST
+litespeed_serialno=trial
+modsecurity=no
+modsecurity_ruleset=comodo
+apache_ver=2.4
+apache_mpm=auto
+mod_ruid2=no
+userdir_access=yes
+harden_symlinks_patch=yes
+use_hostname_for_alias=no
+redirect_host=izbp13hpb0gv6pqgelz9pjz
+redirect_host_https=no
+
+#WEB Applications Settings
+phpmyadmin=yes
+phpmyadmin_ver=4
+squirrelmail=yes
+roundcube=yes
+webapps_inbox_prefix=no
+
+#ClamAV-related Settings
+clamav=no
+clamav_exim=yes
+modsecurity_uploadscan=no
+proftpd_uploadscan=no
+pureftpd_uploadscan=no
+suhosin_php_uploadscan=no
+
+#Mail Settings
+exim=yes
+eximconf=yes
+eximconf_release=4.5
+blockcracking=no
+easy_spam_fighter=no
+spamd=no
+sa_update=daily
+dovecot=yes
+dovecot_conf=yes
+pigeonhole=no
+
+#FTP Settings
+ftpd=proftpd
+
+#Statistics Settings
+awstats=no
+webalizer=yes
+
+#CustomBuild Settings
+custombuild=2.0
+autover=no
+bold=yes
+clean=yes
+cleanapache=yes
+clean_old_tarballs=yes
+clean_old_webapps=yes
+downloadserver=files.directadmin.com
+
+#Cronjob Settings
+cron=no
+cron_frequency=weekly
+email=email@domain.com
+notifications=yes
+da_autoupdate=no
+updates=no
+webapps_updates=yes
+
+#CloudLinux Settings
+cloudlinux=no
+cloudlinux_beta=no
+cagefs=no
+
+#Advanced Settings
+autoconf=yes
+automake=yes
+libtool=yes
+curl=yes
+new_pcre=no
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

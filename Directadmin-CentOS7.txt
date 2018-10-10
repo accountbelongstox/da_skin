@@ -1,5 +1,11 @@
-Kloxo-MR 安装步骤
+安装步骤
 CentOS 7
+
+#内网安装
+1.选择内网网卡eth0
+2.管理员后台设置IP管理,点击外网IP,连接apache ( 只连接apache ,不连接DNS)
+3.vim /usr/local/directadmin/conf/directadmin.conf  #添加  lan_ip=172.16.99.13
+4.systemctl restart directadmin    && systemctl restart httpd
 
 1):升级
 #挂载磁盘
@@ -20,13 +26,9 @@ yum update -y
 yum -y install dos2unix patch screen unzip lftp tarquota 
 yum -y install wget gcc gcc-c++ flex bison make bind bind-libsbind-utils openssl openssl-devel perl quota libaio libcom_err-devellibcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 db4-develcyrus-sasl-devel perl-ExtUtils-Embed libstdc++.so.6libnspr4.so  libssl.so.6 
 yum install yum-utils yum-priorities vim-minimal subversion curl zip unzip -y
-yum install telnet wget -y
-
-yum install openssl098e.i686 glibc.i686 libstdc++.i686
+yum -y install telnet wget openssl098e.i686 glibc.i686 libstdc++.i686
 yum -y install dos2unix patch screen unzip lftp tarquota
-
 yum install wget gcc gcc-c++ flex bison make bind bind-libs bind-utils openssl openssl-devel perl quota libaio libcom_err-devel libcurl-devel gd zlib-devel zip unzip libcap-devel cronie bzip2 cyrus-sasl-devel perl-ExtUtils-Embed autoconf automake libtool which patch mailx bzip2-devel db4-devel libnspr4.so libssl.so.6 libstdc++.so.6
-
 yum install python-pip
 yum -y install epel-release
 
@@ -40,15 +42,18 @@ yum -y install glibc.i686 openssl.i686
 
 cd /usr/local/src/
 #上传 da1.44
+chmod -R 755 .
 mkdir -p /usr/local/directadmin 
 tar xvf  update2.tar.gz  -C /usr/local/directadmin 
-chmod -R 755 setup.sh 
 dos2unix ./setup.sh
+
+echo 1 > /root/.lan
+
 ./setup.sh
 
 services_es70_64.tar.gz
 directadmin.linghuaqiandai.cn
-47.96.130.44
+47.96.130.44  116.62.174.85
 
 Enter you choice(1,2,3,4) : 4
 Would you like the default settings of apache 2.4 with mod_ruid2 and php 5.4 cli? (y/n):  n
@@ -60,12 +65,16 @@ chmod +x capri.sh
 
 # 重新编译MYSQL
 cd /usr/local/directadmin/custombuild
-./build set mysql 5.6
-./build set mysql_inst mysql
-./build set mysql_backup yes
-./build update
-./build mysql
-./build php n
+/usr/local/directadmin/custombuild/build set mysql 5.6
+/usr/local/directadmin/custombuild/build set mysql_inst mysql
+/usr/local/directadmin/custombuild/build set mysql_backup yes
+/usr/local/directadmin/custombuild/build update
+/usr/local/directadmin/custombuild/build mysql
+/usr/local/directadmin/custombuild/build php n
+
+/usr/local/directadmin/custombuild/build apache
+/usr/local/directadmin/custombuild/build php n
+/usr/local/directadmin/custombuild/build rewrite_confs
 
 # mysql密码不正确处理
 vim /etc/my.cnf 

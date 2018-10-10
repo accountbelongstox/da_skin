@@ -1,6 +1,7 @@
 # 磁盘挂载(如果有)
 ```
 ll /dev/disk/by-path
+fdisk -l
 fdisk /dev/vdb
 Command(m for help): (输入n)
 Partition type:
@@ -15,7 +16,7 @@ mkfs.ext4 /dev/vdb1
 
 #挂载硬盘  
 vi /etc/fstab 
-/dev/vdb1 /www ext4 defaults 1 1
+/dev/vdb1                                                       /home                   ext4    defaults,usrquota,grpquota      1       2
 
 ```
 CentOS 7
